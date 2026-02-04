@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import type { ChangeEvent } from 'react'
 import './App.css'
 
 interface IErro {
@@ -31,8 +32,8 @@ export function App() {
       return
     }
 
-    const tarefasFiltradas = tarefas.filter(
-      tarefa => tarefa.trim().toLowerCase() === valorDoInput.trim().toLowerCase()
+    const tarefasFiltradas = tarefas.filter((tarefa: string) =>
+      tarefa.trim().toLowerCase() === valorDoInput.trim().toLowerCase()
     )
 
     if (tarefasFiltradas.length > 0) {
@@ -43,7 +44,7 @@ export function App() {
       return
     }
 
-    setTarefas(oldState => [...oldState, valorDoInput])
+    setTarefas((oldState: string[]) => [...oldState, valorDoInput])
     setValorDoInput("")
   }
 
@@ -51,14 +52,19 @@ export function App() {
     <>
       <div className="card">
         <div className='input-wrapper'>
-          <input type="text" id='input-tarefa' value={valorDoInput} onChange={(e) => setValorDoInput(e.target.value)} />
+          <input
+            type="text"
+            id='input-tarefa'
+            value={valorDoInput}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setValorDoInput(e.target.value)}
+          />
           <p className='erro'>{erro.active && erro.description}</p>
         </div>
         <button onClick={adicionarTarefa}>Adicionar Tarefa</button>
       </div>
       <ul>
         {
-          tarefas.map((tarefa, index) => (
+          tarefas.map((tarefa: string, index: number) => (
             <li key={index}>{tarefa}</li>
           ))
         }
